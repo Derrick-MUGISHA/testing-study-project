@@ -1,10 +1,11 @@
 const formatPrice = (price: number, currencyId: string): string => {
-  switch (currencyId) {
-    case 'BRL':
-      return price.toFixed(2).replace('.', ',');
-    default:
-      return price.toFixed(2);
-  }
+  const locale = currencyId === 'BRL' ? 'pt-BR' : 'en-US';
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyId
+  })
+    .format(price)
+    .replace(/[^\d,.-]/g, '');
 };
 
 export default formatPrice;
